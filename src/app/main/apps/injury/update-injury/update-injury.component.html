@@ -1,0 +1,99 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <!-- content-header component -->
+        <div class="row">
+            <div class="col-12 mt-1 mb-1">
+                <h4 class="text-uppercase">PLAYERS INJURIES</h4>
+
+            </div>
+        </div>
+
+        <!--/ Template Driven Simple Validation -->
+        <!-- Template Driven Multiple Rules Validation -->
+        <section id="multiple-validation">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="card-title">Update Player Injury : </h4>
+                    <div class="card-body">
+                        <form class="form-horizontal" (ngSubmit)="updateInjury()" [formGroup]="BlocForm">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="player_id">Selected Player :</label>
+                                        <select class="form-control" formControlName="player_id" placeholder="Selected Player">
+                                            <option value="" selected disabled> Select a player</option>
+                                            <option *ngFor="let joueur of joueurs" [ngValue]="joueur.id">{{ joueur.username }}</option>
+                                          </select>                                      
+                                        <div *ngIf="validateField('player_id')" class="error-message">
+                                            {{ getErrorMessage('player_id') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="date">Date Of Injury
+                                            :</label>
+                                        <input class="form-control" formControlName="date"
+                                        type="date" placeholder="date" />
+                                        <div *ngIf="validateField('date')" class="error-message">
+                                            {{ getErrorMessage('date') }}
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="type">Type :</label>
+                                        <input class="form-control" formControlName="type"
+                                        type="text" placeholder="Type of injury" />
+                                        <div *ngIf="validateField('type')" class="error-message">
+                                            {{ getErrorMessage('type') }}
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="description">Description :
+                                        </label>
+                                        <textarea class="form-control" formControlName="description"
+                                        placeholder="Description" ></textarea>
+                                        <div *ngIf="validateField('description')" class="error-message">
+                                            {{ getErrorMessage('description') }}
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="recovery_status">Recovery Status :</label>
+                                      <select class="form-control" formControlName="recovery_status"
+                                      placeholder="Status">
+                                        <option value="">Select a recovery status</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Recovered">Recovered</option>
+                                        <option value="In Rehabilitation">In Rehabilitation</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="duration">Duration
+                                            :</label>
+                                        <input class="form-control" formControlName="duration"
+                                        type="date" placeholder="duration" />
+                                        <div *ngIf="validateField('duration')" class="error-message">
+                                            {{ getErrorMessage('duration') }}
+                                          </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <button type="submit" class="btn btn-primary" rippleEffect>
+                                Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- page users view start -->
+    <section class="app-user-view">
+      <!-- User Card & Plan Starts -->
+      <div class="row">
+        <!-- User Card starts-->
+        <div class="col-xl-9 col-lg-8 col-md-7">
+          <div class="card user-card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                  <div class="user-avatar-section">
+                    <div class="d-flex justify-content-start">
+                      <div class="d-flex flex-column ml-1">
+                        <div class="user-info mb-1">
+                          <h4 class="mb-0">User ID :{{ data.id }}</h4>
+                          <span class="card-text">{{ data.fullname }}</span>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                          <a routerLink="/apps/user/user-edit/{{ data.id }}" class="btn btn-primary" rippleEffect
+                            >Edit</a
+                          >
+
+
+                          <button routerLink="/apps/user/user-list"  class="btn btn-outline-secondary" rippleEffect>
+                            List
+                          </button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-xl-6 col-lg-12 mt-2 mt-xl-0">
+                  <div class="user-info-wrapper">
+                    <div class="d-flex flex-wrap">
+                      <div class="user-info-title">
+                        <i data-feather="user" class="mr-1"></i>
+                        <span class="card-text user-info-title font-weight-bold mb-0">Username</span>
+                      </div>
+                      <p class="card-text mb-0">{{ data.username }}</p>
+                    </div>
+                    <div class="d-flex flex-wrap my-50">
+                      <div class="user-info-title">
+                        <i data-feather="check" class="mr-1"></i>
+                        <span class="card-text user-info-title font-weight-bold mb-0">Full Name</span>
+                      </div>
+                      <p class="card-text mb-0">{{ data.fullname }}</p>
+                    </div>
+                    <div class="d-flex flex-wrap my-50">
+                      <div class="user-info-title">
+                        <i data-feather="star" class="mr-1"></i>
+                        <span class="card-text user-info-title font-weight-bold mb-0">Role</span>
+                      </div>
+                      <p class="card-text mb-0">{{ data.role }}</p>
+                    </div>
+                    <div class="d-flex flex-wrap my-50">
+                      <div class="user-info-title">
+                        <i data-feather="flag" class="mr-1"></i>
+                        <span class="card-text user-info-title font-weight-bold mb-0">Email</span>
+                      </div>
+                      <p class="card-text mb-0">{{data.email}}</p>
+                    </div>
+                    <div class="d-flex flex-wrap">
+                      <div class="user-info-title">
+                        <i data-feather="phone" class="mr-1"></i>
+                        <span class="card-text user-info-title font-weight-bold mb-0">Phone</span>
+                      </div>
+                      <p class="card-text mb-0">{{ data.phone }}</p>
+                    </div>
+                      <!-- ... existing HTML ... -->
+
+                      <div class="d-flex flex-wrap my-50">
+                          <div class="user-info-title">
+                              <i data-feather="hash" class="mr-1"></i>
+                              <span class="card-text user-info-title font-weight-bold mb-0">Height</span>
+                          </div>
+                          <p class="card-text mb-0">{{ data.height }}</p>
+                      </div>
+                      <div class="d-flex flex-wrap my-50">
+                          <div class="user-info-title">
+                              <i data-feather="anchor" class="mr-1"></i>
+                              <span class="card-text user-info-title font-weight-bold mb-0">Weight</span>
+                          </div>
+                          <p class="card-text mb-0">{{ data.weight }}</p>
+                      </div>
+                      <div class="d-flex flex-wrap my-50">
+                          <div class="user-info-title">
+                              <i data-feather="calendar" class="mr-1"></i>
+                              <span class="card-text user-info-title font-weight-bold mb-0">Age</span>
+                          </div>
+                          <p class="card-text mb-0">{{ data.age }}</p>
+                      </div>
+                      <div class="d-flex flex-wrap">
+                          <div class="user-info-title">
+                              <i data-feather="map-pin" class="mr-1"></i>
+                              <span class="card-text user-info-title font-weight-bold mb-0">Nationality</span>
+                          </div>
+                          <p class="card-text mb-0">{{ data.nationality }}</p>
+                      </div>
+
+                      <!-- ... rest of the HTML ... -->
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /User Card Ends-->
+
+        <!-- Plan Card starts-->
+
+        <!-- /Plan CardEnds -->
+      </div>
+      <!-- User Card & Plan Ends -->
+
+      <!-- User Timeline & Permissions Starts -->
+
+      <!-- User Timeline & Permissions Ends -->
+
+      <!-- User Invoice Starts-->
+
+      <!-- /User Invoice Ends-->
+    </section>
+    <!-- page users view end -->
+  </div>
+</div>

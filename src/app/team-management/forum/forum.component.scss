@@ -1,0 +1,26 @@
+.forum-posts {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.author {
+  font-style: italic;
+  margin-right: 0px;
+}
+
+/* Custom CSS to move author to the right */
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.author {
+  margin-left: auto; /* Move author to the right */
+}
+
+/* Custom CSS to change cursor */
+h2 {
+  cursor: pointer;
+}
+
+@import "@core/scss/base/pages/page-faq.scss";

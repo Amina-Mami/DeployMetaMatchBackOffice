@@ -1,0 +1,126 @@
+/* match.component.css */
+.calendar-container {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(223, 149, 149, 0.1);
+}
+
+.btn {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.full-calendar {
+  margin-top: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.modal {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; /* Adjust the width as needed */
+  min-height: 300px; /* Define the minimum height */
+  max-height: 500px; /* Define the maximum height if needed */
+  overflow-y: auto; /* Add vertical scroll if content exceeds height */
+  border-radius: 10px; /* Add border radius for rounded corners */
+  z-index: 1000;
+  display: none;
+}
+
+/* Hide scrollbar for the modal */
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+.close {
+  position: absolute;
+  top: 10px; /* Adjust the top position */
+  right: 20px; /* Adjust the right position */
+  cursor: pointer;
+}
+
+.modal.show {
+  display: block;
+}
+.short-input {
+  width: 180px; /* Adjust the width as needed */
+}
+
+.btn.btn-outline-secondary.btn-sm,
+.btn.btn-outline-danger.btn-sm {
+  padding: 0.25rem 0.5rem !important;
+  margin-right: 20px; /* Adjust the margin as needed for the desired spacing */
+
+  color: black;
+}
+
+.btn.btn-outline-secondary.btn-sm:hover {
+  color: rgb(63, 95, 155);
+}
+.btn.btn-outline-danger.btn-sm:hover {
+  color: rgb(209, 10, 77);
+}
+
+.event-tooltip {
+  position: fixed;
+  background-color: rgb(151, 179, 140);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.event-tooltip h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.event-tooltip p {
+  margin: 5px 0;
+  color: #666;
+}
+
+/* Style the versus symbol */
+.event-tooltip .versus {
+  margin-right: 8px; /* Adjust the margin as needed */
+  font-size: 20px;
+  color: #ff5733; /* Custom color for the versus symbol */
+}
+.modal-header {
+  position: relative;
+}

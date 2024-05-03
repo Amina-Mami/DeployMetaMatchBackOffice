@@ -1,0 +1,135 @@
+<div class="slideout-content">
+  <!-- Modal to add new user starts-->
+  <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+    <div class="modal-dialog">
+
+
+      <form class="add-new-user modal-content pt-0" [formGroup]="formValue" (ngSubmit)="(newUserForm.form.valid)" #newUserForm="ngForm">
+        <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="toggleSidebar('new-user-sidebar')"
+        >
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+        </div>
+
+        <div class="modal-body flex-grow-1">
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+            <input
+
+                    type="text"
+                    formControlName="fullname"
+                    class="form-control dt-full-name"
+                    id="basic-icon-default-fullname"
+                    placeholder="Your first name and last name"
+
+            />
+
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-uname">Username</label>
+            <input
+                    type="text"
+                    formControlName="username"
+                    id="basic-icon-default-uname"
+                    class="form-control dt-uname"
+                    placeholder="example"
+                    aria-label="example"
+                    aria-describedby="basic-icon-default-uname2"
+
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-email">Email</label>
+            <input
+                    type="text"
+                    formControlName="email"
+                    id="basic-icon-default-email"
+                    class="form-control dt-email"
+                    placeholder="ex@example.com"
+                    aria-label="ex@example.com"
+                    aria-describedby="basic-icon-default-email2"
+
+            />
+            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-phone">Phone Number</label>
+            <input
+                    type="number"
+                    formControlName="phone"
+                    id="basic-icon-default-phone"
+                    class="form-control dt-uname"
+                    placeholder="Phone "
+                    aria-label="50303910"
+                    aria-describedby="basic-icon-default-phone2"
+
+            />
+          </div>
+
+
+
+            <!-- ... added fields ... -->
+
+            <!-- Role Selection Dropdown -->
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role" formControlName="role">
+                    <option value="Player">Player</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Coach">Coach</option>
+                    <option value="Physiotherapist">Physiotherapist</option>
+                    <option value="Doctor">Doctor</option>
+                </select>
+            </div>
+
+            <!-- Conditional Block for Player-Specific Fields -->
+            <div *ngIf="formValue.get('role').value === 'Player'">
+                <div class="form-group">
+                    <label class="form-label" for="user-height">Height</label>
+                    <input type="text" formControlName="height" class="form-control" id="user-height" placeholder="e.g., 5'11''"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="user-weight">Weight</label>
+                    <input type="number" formControlName="weight" class="form-control" id="user-weight" placeholder="e.g., 67"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="user-age">Age</label>
+                    <input type="number" formControlName="age" class="form-control" id="user-age" placeholder="e.g., 24"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="user-nationality">Nationality</label>
+                    <input type="text" formControlName="nationality" class="form-control" id="user-nationality" placeholder="e.g., Naples, Italy"/>
+                </div>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary mr-1" (click)="addUserDetails()" rippleEffect>Submit</button>
+          <button
+                  type="reset"
+                  class="btn btn-outline-secondary"
+                  (click)="toggleSidebar('new-user-sidebar')"
+                  rippleEffect
+          >
+            Cancel
+          </button>
+          </div>
+      </form>
+
+
+    </div>
+  </div>
+  <!-- Modal to add new user Ends-->
+</div>

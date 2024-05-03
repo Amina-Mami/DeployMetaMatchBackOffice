@@ -1,0 +1,42 @@
+.custom-table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+  background-color: black;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.thead-custom {
+  background-color: black;
+  color: #ffffff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.badge {
+  font-size: 14px;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}

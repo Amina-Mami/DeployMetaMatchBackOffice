@@ -1,0 +1,408 @@
+<div class="container mt-5">
+  <h2>Match Calendar</h2>
+  <div class="row">
+    <div class="col text-left">
+      <button class="btn btn-primary mb-3" (click)="openAddModal()">
+        Add Match
+      </button>
+    </div>
+    <div class="col text-right">
+      <input
+        type="file"
+        id="csvInput"
+        class="d-none"
+        accept=".csv"
+        (change)="handleCsvSelection($event)"
+      />
+      <label for="csvInput" class="btn btn-primary mb-3"
+        >Add a match via CSV</label
+      >
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col text-center">
+      <div class="d-flex justify-content-center mb-2">
+        <div class="d-flex align-items-center">
+          <input
+            type="text"
+            id="teamAName"
+            [(ngModel)]="teamAName"
+            class="form-control short-input mr-1"
+            placeholder="Team A"
+          />
+
+          <h1 class="mx-2">{{ teamAScore }} : {{ teamBScore }}</h1>
+
+          <input
+            type="text"
+            id="teamBName"
+            [(ngModel)]="teamBName"
+            class="form-control short-input"
+            placeholder="Team B"
+          />
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          (click)="incrementTeamAScore(teamAName)"
+          [disabled]="gameFinished"
+        >
+          +
+        </button>
+        <button
+          class="btn btn-outline-danger btn-sm"
+          (click)="decrementTeamAScore(teamAName)"
+          [disabled]="gameFinished"
+        >
+          -
+        </button>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          (click)="incrementTeamBScore(teamBName)"
+          [disabled]="gameFinished"
+        >
+          +
+        </button>
+        <button
+          class="btn btn-outline-danger btn-sm mr-2"
+          (click)="decrementTeamBScore(teamBName)"
+          [disabled]="gameFinished"
+        >
+          -
+        </button>
+        <br />
+        <button class="btn btn-secondary mr-1" (click)="finishGame()">
+          Finish
+        </button>
+        <button class="btn btn-danger" (click)="restartGame()">Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <full-calendar [options]="calendarOptions"></full-calendar>
+
+  <div
+    class="event-tooltip"
+    *ngIf="tooltipVisible"
+    [style.top.px]="tooltipPosition.top"
+    [style.left.px]="tooltipPosition.left"
+  >
+    <p>📅 {{ hoveredEvent?.date | date : "mediumDate" }}</p>
+    <p>📅 {{ hoveredEvent?.time }}</p>
+    <p>📍 {{ hoveredEvent?.location }}</p>
+    <p>👥 {{ hoveredEvent?.teamA }} 🆚 {{ hoveredEvent?.teamB }}</p>
+  </div>
+
+  <!-- Edit Match Modal -->
+  <div
+    class="overlay"
+    [class.show]="showEditModal"
+    (click)="closeEditModal()"
+  ></div>
+  <div class="modal" tabindex="-1" role="dialog" [class.show]="showEditModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Match</h5>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeEditModal()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="editMatchForm" (ngSubmit)="editMatch()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="date">Date:</label>
+              <input type="date" class="form-control" formControlName="date" />
+              <div
+                *ngIf="
+                  editMatchForm.get('date').touched &&
+                  editMatchForm.get('date').errors?.required
+                "
+                class="alert alert-danger"
+              >
+                Date is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="time">Time:</label>
+              <input type="time" class="form-control" formControlName="time" />
+              <div
+                *ngIf="
+                  editMatchForm.get('time').touched &&
+                  editMatchForm.get('time').errors?.required
+                "
+                class="alert alert-danger"
+              >
+                Time is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="location">Location:</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="location"
+              />
+              <div
+                *ngIf="
+                  editMatchForm.get('location').touched &&
+                  editMatchForm.get('location').errors?.required
+                "
+                class="alert alert-danger"
+              >
+                Location is required.
+              </div>
+              <div
+                *ngIf="
+                  editMatchForm.get('location').touched &&
+                  editMatchForm.get('location').errors?.minlength
+                "
+                class="alert alert-danger"
+              >
+                Location must be at least 3 characters.
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="teamA">Team A:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="teamA"
+                />
+                <div
+                  *ngIf="
+                    editMatchForm.get('teamA').touched &&
+                    editMatchForm.get('teamA').errors?.required
+                  "
+                  class="alert alert-danger"
+                >
+                  Team A is required.
+                </div>
+                <div
+                  *ngIf="
+                    editMatchForm.get('teamA').touched &&
+                    editMatchForm.get('teamA').errors?.minlength
+                  "
+                  class="alert alert-danger"
+                >
+                  Team A must be at least 3 characters.
+                </div>
+              </div>
+              <div
+                class="form-group col-md-2 d-flex align-items-center justify-content-center"
+              >
+                <span class="vs-emoji">🆚</span>
+              </div>
+              <div class="form-group col-md-5">
+                <label for="teamB">Team B:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="teamB"
+                />
+                <div
+                  *ngIf="
+                    editMatchForm.get('teamB').touched &&
+                    editMatchForm.get('teamB').errors?.required
+                  "
+                  class="alert alert-danger"
+                >
+                  Team B is required.
+                </div>
+                <div
+                  *ngIf="
+                    editMatchForm.get('teamB').touched &&
+                    editMatchForm.get('teamB').errors?.minlength
+                  "
+                  class="alert alert-danger"
+                >
+                  Team B must be at least 3 characters.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="deleteMatch()"
+            >
+              Delete
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="editMatchForm.invalid"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Match Modal -->
+  <div
+    class="overlay"
+    [ngClass]="{ show: showAddModal }"
+    (click)="closeAddModal()"
+  ></div>
+  <div class="modal" tabindex="-1" role="dialog" [class.show]="showAddModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add a Match</h5>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeAddModal()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="matchForm" (ngSubmit)="addMatch()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="date">Date:</label>
+              <input type="date" class="form-control" formControlName="date" />
+              <div
+                *ngIf="
+                  matchForm.get('date').touched &&
+                  matchForm.get('date').errors?.required
+                "
+                class="alert alert-danger"
+              >
+                Date is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="time">Time:</label>
+              <input type="time" class="form-control" formControlName="time" />
+              <div
+                *ngIf="
+                  matchForm.get('time').touched &&
+                  matchForm.get('time').errors?.required
+                "
+                class="alert alert-danger"
+              >
+                Time is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="location">Location:</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="location"
+              />
+              <div
+                *ngIf="
+                  matchForm.get('location').touched &&
+                  matchForm.get('location').errors?.required
+                "
+                class="alert alert-danger"
+              >
+                Location is required.
+              </div>
+              <div
+                *ngIf="
+                  matchForm.get('location').touched &&
+                  matchForm.get('location').errors?.minlength
+                "
+                class="alert alert-danger"
+              >
+                Location must be at least 3 characters.
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="teamA">Team A:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="teamA"
+                />
+                <div
+                  *ngIf="
+                    matchForm.get('teamA').touched &&
+                    matchForm.get('teamA').errors?.required
+                  "
+                  class="alert alert-danger"
+                >
+                  Team A is required.
+                </div>
+                <div
+                  *ngIf="
+                    matchForm.get('teamA').touched &&
+                    matchForm.get('teamA').errors?.minlength
+                  "
+                  class="alert alert-danger"
+                >
+                  Team A must be at least 3 characters.
+                </div>
+              </div>
+              <div
+                class="form-group col-md-2 d-flex align-items-center justify-content-center"
+              >
+                <span class="vs-emoji">🆚</span>
+              </div>
+              <div class="form-group col-md-5">
+                <label for="teamB">Team B:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="teamB"
+                />
+                <div
+                  *ngIf="
+                    matchForm.get('teamB').touched &&
+                    matchForm.get('teamB').errors?.required
+                  "
+                  class="alert alert-danger"
+                >
+                  Team B is required.
+                </div>
+                <div
+                  *ngIf="
+                    matchForm.get('teamB').touched &&
+                    matchForm.get('teamB').errors?.minlength
+                  "
+                  class="alert alert-danger"
+                >
+                  Team B must be at least 3 characters.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="matchForm.invalid"
+            >
+              Add Match
+            </button>
+            <div
+              *ngIf="showSuccessAlert"
+              class="alert alert-success"
+              role="alert"
+            >
+              Match added successfully!
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

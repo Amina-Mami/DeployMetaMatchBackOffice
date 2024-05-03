@@ -1,0 +1,37 @@
+<div class="content-wrapper container-xxl p-0">
+ 
+   
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+      <ul>
+        <li>
+          <span>Full Calendar</span>
+          <div class="calendar-wrapper">
+            <button class="btn-calendar" (click)="navigateToFullCalender()">
+              <i class="fas fa-calendar-alt fa-xs"></i>
+            </button>
+          </div>
+        </li>
+        
+        <li *ngFor="let player of players">
+          
+          <div class="player-info">
+            <div>Username: {{ player.username }}</div>
+            <div>Email: {{ player.email }}</div>
+          
+          </div>
+          <button class="btn-consult-meetings" (click)="navigateToCalendar(player)">
+            <i class="fas fa-calendar-alt"></i> Consult
+          </button>
+       
+          <ul *ngIf="player.meetings">
+            <li *ngFor="let meeting of player.meetings">
+              {{ meeting.name }} - {{ meeting.date }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+  

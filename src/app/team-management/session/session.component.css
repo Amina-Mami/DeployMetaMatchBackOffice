@@ -1,0 +1,123 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(196, 15, 15, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.modal {
+  width: auto; /* Adjust width to fit content, use max-width for limits */
+  max-width: 80%; /* Prevent it from being too wide */
+  height: auto; /* Adjust height to fit content, use max-height for limits */
+  max-height: 80%; /* Prevent it from being too tall */
+  padding: 20px; /* Add padding for aesthetics */
+  overflow: auto; /* Enable scrolling within the modal */
+  background-color: rgba(196, 15, 15, 0.5);
+}
+.modal-content {
+  overflow: auto; /* Adds scroll to modal content if it overflows */
+}
+
+.modal.show {
+  display: block;
+}
+
+/* Session Component Styles */
+.session-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Statistics Section */
+.statistics-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #ac1010;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px; /* Adjust based on your layout */
+}
+
+.statistics-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.statistics-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.statistics-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.statistics-item:last-child {
+  border-bottom: none;
+}
+
+.statistics-item-key {
+  font-weight: 500;
+}
+
+.statistics-item-value {
+  font-weight: bold;
+  color: #007bff; /* Adjust the color to match your theme */
+}
+
+/* session.component.scss */
+/* Style for the container div */
+.container {
+  margin-bottom: 20px; /* Add some space at the bottom */
+}
+
+.count {
+  text-align: right;
+  color: #ac1010;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+select {
+  padding: 5px;
+  color: white;
+}
+
+p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .statistics-section {
+    margin-top: 10px;
+    padding: 10px;
+  }
+  .statistics-title {
+    font-size: 16px;
+  }
+  .modal {
+    width: 95%;
+    height: auto;
+    max-height: 90%;
+  }
+}

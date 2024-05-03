@@ -1,0 +1,146 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- Replace the content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <section id="faq-search-filter">
+      <div
+        class="card faq-search"
+        style="background-image: url('assets/images/banner/banner.png')"
+      >
+        <div class="card-body text-center">
+          <!-- main title -->
+          <h2 class="text-primary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <circle
+                cx="12"
+                cy="12"
+                r="11"
+                stroke="black"
+                stroke-width="2"
+                fill="white"
+              />
+              <circle cx="12" cy="12" r="2" fill="black" />
+            </svg>
+            Let's Discuss Football
+          </h2>
+
+          <!-- subtitle -->
+          <p class="card-text mb-2">
+            Where passion meets the pitch – Welcome to the Football Forum!
+          </p>
+
+          <!-- search input -->
+          <form class="faq-search-input">
+            <div class="input-group input-group-merge">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i data-feather="search"></i>
+                </div>
+              </div>
+              <input
+                type="text"
+                [(ngModel)]="searchText"
+                name="searchbar"
+                class="form-control"
+                placeholder="Search ..."
+                (input)="filterForums()"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Forum content -->
+    <section id="faq">
+      <div class="row nav-vertical d-flex">
+        <div class="col-md-4 mb-2 mb-md-0">
+          <!-- Replace the navigation links with your forum categories -->
+          <ul
+            ngbNav
+            #navVertical="ngbNav"
+            class="nav nav-pills flex-column nav-left"
+          >
+            <!-- Example category link -->
+            <!-- Example category link -->
+
+            <li
+              class="nav-item"
+              ngbNavItem
+              *ngFor="let forum of filterForums()"
+            >
+              <a
+                ngbNavLink
+                class="nav-link d-flex py-75"
+                id="general-discussion"
+                data-toggle="pill"
+                href="#forum-general-discussion"
+                aria-expanded="true"
+                role="tab"
+              >
+                <i
+                  class="font-medium-3 mr-1"
+                  [ngClass]="{
+                    'fa fa-caret-down': forum.expanded,
+                    'fa fa-caret-up': forum.expanded
+                  }"
+                  (click)="toggleForum(forum)"
+                >
+                </i>
+
+                <span class="font-weight-bold">{{ forum.title }}</span>
+              </a>
+              <!-- Example category content -->
+              <ng-template ngbNavContent>
+                <div
+                  role="tabpanel"
+                  class="tab-pane active collapse-icon"
+                  id="forum-general-discussion"
+                  aria-labelledby="general-discussion"
+                  aria-expanded="true"
+                >
+                  <!-- Populate with forum posts for General Discussion -->
+                  <div class="forum-posts">
+                    <div class="forum-post">
+                      <div class="post-header">
+                        <h2
+                          (click)="forum.expanded = !forum.expanded"
+                          style="cursor: pointer"
+                        >
+                          {{ forum.title }}
+                        </h2>
+                        <p class="author ml-auto">By {{ forum.author }}</p>
+                      </div>
+                      <!-- Content toggle -->
+                      <div *ngIf="forum.expanded">
+                        <p class="content">{{ forum.content }}</p>
+                        <!-- Add any additional actions here if needed -->
+                      </div>
+                      <button
+                        class="btn btn-danger"
+                        (click)="deleteForum(forum)"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </li>
+
+            <!-- Add more category links as needed -->
+          </ul>
+        </div>
+        <!-- Content outlet for forum posts -->
+        <div [ngbNavOutlet]="navVertical" class="col-12 col-md-8"></div>
+      </div>
+    </section>
+  </div>
+</div>

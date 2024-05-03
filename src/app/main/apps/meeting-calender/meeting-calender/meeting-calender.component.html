@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <table class="table table-hover custom-table">
+    <thead class="thead-custom">
+      <tr>
+        <th class="column-header">Meeting Date</th>
+        <th class="column-header">Description</th>
+        <th class="column-header text-center">Status</th>
+        <th class="column-header text-center">Cancel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let meeting of meetings">
+        <td class="bold-text">{{ formatDate(meeting.meetingDate) }}</td>
+        <td class="bold-text">{{ meeting.description }}</td>
+        <td class="align-middle text-center">
+          <span *ngIf="meeting.confirmed" class="badge badge-success">Confirmed</span>
+          <span *ngIf="!meeting.confirmed" class="badge badge-warning">Pending</span>
+        </td>
+        <td class="align-middle text-center">
+          <button (click)="cancelMeeting(meeting._id)" class="btn btn-danger" style="color: black;">
+            Cancel
+          </button>
+       
+        
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,77 @@
+<!-- ecommerce.component.html -->
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <h2 class="content-header-title">User Statistics</h2>
+        </div>
+    </div>
+    <div class="content-body">
+        <!-- User Statistics -->
+        <section id="statistics-card">
+            <div class="row">
+                <!-- Total Users -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa fa-users fa-2x text-primary mb-2"></i>
+                            <h4 class="card-title">Total Users</h4>
+                            <p class="card-text">{{ userStats.userCount }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Players -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa fa-futbol-o fa-2x text-warning mb-2"></i>
+                            <h4 class="card-title">Players</h4>
+                            <p class="card-text">{{ userStats.playerCount }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coaches -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa fa-user-secret fa-2x text-info mb-2"></i> <!-- Alternative Icon -->
+                            <h4 class="card-title">Coaches</h4>
+                            <p class="card-text">{{ userStats.coachCount }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Admins -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa fa-user fa-2x text-danger mb-2"></i> <!-- Alternative Icon -->
+                            <h4 class="card-title">Admins</h4>
+                            <p class="card-text">{{ userStats.adminCount }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Physiotherapists -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa fa-heartbeat fa-2x text-success mb-2"></i>
+                            <h4 class="card-title">Physiotherapists</h4>
+                            <p class="card-text">{{ userStats.physiotherapistCount }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Doctors -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa fa-user-md fa-2x text-secondary mb-2"></i>
+                            <h4 class="card-title">Doctors</h4>
+                            <p class="card-text">{{ userStats.doctorCount }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /User Statistics -->
+    </div>
+</div>

@@ -1,0 +1,47 @@
+.code-icon {
+  font: normal normal normal 14px/1 FontAwesome;
+  display: inline-block;
+  font-weight: 700 !important;
+  cursor: pointer;
+}
+.code-icon:before {
+  content: "\f121";
+}
+
+.code-toggle {
+  transition: transform 0.35s, opacity 0.35s, max-height 0.4s ease-out;
+  position: relative;
+}
+.code-toggle.collapse {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(100%);
+}
+.code-toggle.collapse.show {
+  opacity: 1;
+  max-height: 600px;
+  transform: translateY(0);
+}
+.code-toggle.collapse:not(.show) {
+  display: block;
+}
+.code-toggle pre {
+  max-height: 350px;
+  overflow: auto;
+  white-space: nowrap;
+  margin: 0;
+}
+.code-toggle pre code {
+  white-space: pre;
+  overflow: visible;
+  padding: 2rem 0.5em;
+}
+.code-toggle .icon-copy {
+  position: absolute;
+  right: 7px;
+}
+.code-toggle .text-copied {
+  position: absolute;
+  right: 7px;
+  top: 5px;
+}/*# sourceMappingURL=card-snippet.component.css.map */

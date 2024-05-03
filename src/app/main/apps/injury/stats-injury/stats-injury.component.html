@@ -1,0 +1,82 @@
+<section id="stats-section" class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Statistics By Type Of Injury</h4>
+        </div>
+        <div class="card-body">
+          <canvas id="donutChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Statistics By Recovery Status</h4>
+        </div>
+        <div class="card-body">
+          <canvas id="barChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="inputYear">Year :</label>
+        <input
+          type="number"
+          id="inputYear"
+          name="inputYear"
+          [(ngModel)]="selectedYear"
+          class="form-control"
+          placeholder="Saisir l'année"
+        />
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" (click)="fetchYearStats()">
+          Show Statistics
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">
+            Statistics By
+            <span *ngIf="selectedYear">Year {{ selectedYear }}</span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <canvas id="lineChart" width="800" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Number of Sessions scheduled Per Month</h4>
+      </div>
+      <div class="card-body">
+        <div id="chartContainer" style="display: flex; flex-wrap: wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Number of Matches scheduled Per Month</h4>
+    </div>
+    <div class="card-body">
+      <canvas id="barChartMatch" width="400" height="400"></canvas>
+    </div>
+  </div>
+</section>

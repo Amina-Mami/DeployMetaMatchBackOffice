@@ -1,0 +1,141 @@
+.content-wrapper {
+    padding: 20px;
+  }
+  
+  .content-body {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center; /* Aligner les éléments horizontalement */
+  }
+  
+  .player-info {
+    flex-grow: 1; /* Faire en sorte que la div prenne tout l'espace restant */
+  }
+  
+  .player-info div {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333333;
+  }
+  
+  .player-info div:first-child {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff; /* couleur pour le nom d'utilisateur */
+  }
+  
+  .btn-consult-meetings {
+    background-color:#7367f0;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn-consult-meetings:hover {
+    background-color: #7367f0;
+  }
+  
+  .btn-consult-meetings i {
+    margin-right: 5px;
+  }
+  .sidebar {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #dee2e6;
+  }
+  
+  .sidebar-header h3 {
+    color: #343a40;
+  }
+  
+  .sidebar .list-group-item {
+    border: none;
+  }
+  
+  .sidebar-footer {
+    margin-top: 20px;
+  }
+  
+  .add-task-button {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-task-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .plan-meeting-form {
+    display: none;
+  }
+  
+  .show-form {
+    display: block;
+  }
+  .confirmed .fa-check-circle {
+    color: green;
+  }
+  
+  .pending .fa-clock {
+    color: orange;
+  }
+  .meeting-success {
+    background-color: #5cb85c !important; /* Couleur de fond verte */
+}
+.calendar-wrapper {
+  text-align: center;
+}
+
+.btn-calendar {
+  font-size: 24px; /* Taille de l'icône réduite de 3 fois */
+  background-color: #f44336; /* Couleur de fond */
+  color: #fff; /* Couleur du texte */
+  border: none;
+  border-radius: 50%; /* Forme du bouton ronde */
+  padding: 10px; /* Espace à l'intérieur du bouton */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Ombre */
+}
+
+.btn-calendar:hover {
+  background-color: #d32f2f; /* Couleur de fond au survol */
+}
+.calendar-wrapper {
+  margin-left: 10px; /* Ajoute de l'espace à gauche de l'icône */
+  display: inline-block; /* Permet de positionner l'élément en ligne avec le texte */
+}
+
+span {
+  margin-right: 10px; /* Ajoute de l'espace à droite du texte */
+}

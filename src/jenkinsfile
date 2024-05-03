@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'angular-app:latest'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Clean up previous build artifacts
+                    sh 'npm install'
+                    sh 'npm run build -- --prod'
+                }
+            }
+        }
+        
+        stage('Docker Build') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                script {
+                    // Push the Docker image to a container registry
+                    sh 'docker push $DOCKER_IMAGE'
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy the Docker image to your Kubernetes cluster or other environment
+                    // For example, you can use kubectl to apply a deployment yaml
+                    // sh 'kubectl apply -f deployment.yaml'
+                    echo 'Deployment step...'
+                }
+            }
+        }
+    }
+}

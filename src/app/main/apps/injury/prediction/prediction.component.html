@@ -1,0 +1,64 @@
+<section id="players">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-sm-12 text-center">
+              <h2 class="mgt">Injury Prediction</h2>
+              <hr />
+          </div>
+          <div class="col-sm-8">
+              <form>
+                <div class="form-group">
+                  <label for="age">Âge</label>
+                  <input type="number" class="form-control" id="age" [(ngModel)]="age" name="age" placeholder="Âge">
+                </div>
+                <div class="form-group">
+                  <label for="position">Position</label>
+                  <select class="form-control" id="position" [(ngModel)]="position" name="position">
+                    <!-- Remplacez ces options par vos positions -->
+                    <option value="Milieu de terrain">Milieu de terrain</option>
+                    <option value="Attaquant">Attaquant</option>
+                    <option value="Défenseur">Défenseur</option>
+                    <option value="Gardien de but">Gardien de but</option>
+                    <option value="Attaquant">Attaquant</option>
+                    <!-- etc. -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="nationality">Nationalité</label>
+                  <select class="form-control" id="nationality" [(ngModel)]="nationality" name="nationality">
+                    <!-- Remplacez ces options par vos nationalités -->
+                    <option value="Égyptien">Égyptien</option>
+                    <option value="Tunisien">Tunisien</option>
+                    <!-- etc. -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="team">Équipe</label>
+                  <select class="form-control" id="team" [(ngModel)]="team" name="team">
+                    <!-- Remplacez ces options par vos équipes -->
+                    <option value="Équipe nationale">Équipe nationale</option>
+                    <option value="Club Al Ahly">Club Al Ahly</option>
+                    <option value="Club Zamalek">Club Zamalek</option>
+                    <option value="Club Pyramids FC">Club Pyramids FC</option>
+                    <option value="Club Al Masry">Club Al Masry</option>
+                    <option value="Club Smouha SC">Club Smouha SC</option>
+                    <option value="Club ENPPI">Club ENPPI</option>
+                    <option value="Club Al Masry">Club Al Masry</option>
+                    <!-- etc. -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="predict()">Prédire</button>
+              </form>
+                <div class="col-sm-12 text-center">
+                  <br>
+                  <h2 class="mgt">Résultat</h2>
+                  <hr />
+              </div>                
+            
+              <p *ngIf="prediction" style="color: rgb(161, 81, 81);">La probabilité de blessure est estimée à {{ prediction }}%. Cette prédiction est basée sur l'âge du joueur, sa position, son équipe et sa nationalité.</p>
+              <canvas #barChart></canvas>
+              <p>Le graphique ci-dessus montre comment chaque facteur contribue à la prédiction. Plus la barre est haute, plus le facteur est important.</p>
+          </div>
+      </div>
+  </div>
+</section>

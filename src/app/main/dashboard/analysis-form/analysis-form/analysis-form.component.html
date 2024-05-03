@@ -1,0 +1,1177 @@
+<div class="container">
+  <!-- <h1>Get the Performance Analysis Form Ready</h1> -->
+  <!--<div class="header">
+      
+      <a class="link" (click)="toggleView()">
+        {{ showPlayersList ?   'View Players List' :'View Forms'}}
+      </a>
+    </div>-->
+  <div class="header justify-content-center mt-3">
+    <!-- Lien pour basculer entre l'affichage de la liste des joueurs, la liste de formulaires et le contenu de performance -->
+    <div class="d-flex justify-content-center">
+      <a
+        class="link text-center justify-content-center"
+        (click)="toggleView('players')"
+        >View Players List</a
+      >
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- Espace -->
+      <a class="link" (click)="toggleView('forms')">View Forms</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- Espace -->
+      <a class="link" (click)="toggleView('performance')">View Performance</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- Espace -->
+    </div>
+    <div *ngIf="showPlayersList">
+      <div class="d-flex justify-content-center my-4">
+        <!-- Centre le contenu -->
+        <label for="csvUpload" class="btn btn-crystal">
+          <!-- Bouton avec effet brillant -->
+          <i class="bi bi-upload"></i>
+          <!-- Icône d'importation -->
+          Import a CSV<!-- Texte descriptif -->
+        </label>
+
+        <!-- Champ d'importation de fichiers -->
+        <input
+          id="csvUpload"
+          type="file"
+          (change)="importCSV($event)"
+          accept=".csv"
+          class="d-none"
+        />
+      </div>
+
+      <!-- CSS -->
+      <style>
+        .btn-crystal {
+          background: linear-gradient(
+            135deg,
+            #6f42c1,
+            #3c1053
+          ); /* Dégradé violet vers foncé */
+          color: white; /* Couleur du texte */
+          border: none; /* Pas de bordure */
+          border-radius: 5px; /* Coins arrondis */
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre douce */
+          transition: all 0.3s ease; /* Transition douce pour hover */
+        }
+
+        .btn-crystal:hover {
+          background: linear-gradient(
+            135deg,
+            #3c1053,
+            #6f42c1
+          ); /* Inverse le dégradé */
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombre plus forte au hover */
+        }
+      </style>
+      <h2 class="text-center">Players List</h2>
+      <div class="table-responsive mt-3">
+        <!-- Makes the table responsive -->
+        <table class="table table-bordered table-hover">
+          <!-- Basic table structure -->
+          <thead class="thead-light">
+            <!-- Light theme for headers -->
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Action</th>
+              <!-- "Add Form" button column -->
+              <th>PlayerForm</th>
+              <!-- "View Player Form" button column -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let joueur of joueurs">
+              <td>{{ joueur.email }}</td>
+              <td>{{ joueur.fullname }}</td>
+              <td>
+                <button
+                  class="btn btn-primary btn-sm btn-crystal"
+                  (click)="toggleAddForm(joueur.fullname)"
+                >
+                  Add Form
+                </button>
+              </td>
+              <td>
+                <button
+                  class="btn btn-primary btn-sm btn-crystal"
+                  (click)="viewForm(joueur.fullname)"
+                >
+                  ViewPlayerForm
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Composant qui affiche les notifications -->
+      <div *ngIf="notification" class="alert alert-info">
+        {{ notification }}
+      </div>
+      <div class="container mt-4" *ngIf="selectedForm">
+        <!-- Player Information Section -->
+        <div class="card mb-3">
+          <div class="card-header bg-primary text-white">
+            Player Information for
+            {{ selectedForm.playerInformation.playerName }}
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Player Name: {{ selectedForm.playerInformation.playerName }}
+              </li>
+              <li class="list-group-item">
+                Team: {{ selectedForm.playerInformation.team }}
+              </li>
+              <li class="list-group-item">
+                Position: {{ selectedForm.playerInformation.position }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Performance Metrics Section -->
+        <div class="card mb-3">
+          <div class="card-header bg-info text-white">Performance Metrics</div>
+          <div class="card-body">
+            <!-- Grouped into different categories with Bootstrap grid -->
+            <div class="row">
+              <!-- Passing -->
+              <div class="col-md-6">
+                <h4>Passing</h4>
+                <ul>
+                  <li>
+                    Total Passes:
+                    {{ selectedForm.performanceMetrics.passing.totalPasses }}
+                  </li>
+                  <li>
+                    Successful Passes:
+                    {{
+                      selectedForm.performanceMetrics.passing.successfulPasses
+                    }}
+                  </li>
+                  <li>
+                    Passing Accuracy:
+                    {{
+                      selectedForm.performanceMetrics.passing.passingAccuracy
+                    }}%
+                  </li>
+                  <li>
+                    Key Passes:
+                    {{ selectedForm.performanceMetrics.passing.keyPasses }}
+                  </li>
+                </ul>
+              </div>
+              <!-- Shooting -->
+              <div class="col-md-6">
+                <h4>Shooting</h4>
+                <ul>
+                  <li>
+                    Total Shots:
+                    {{ selectedForm.performanceMetrics.shooting.totalShots }}
+                  </li>
+                  <li>
+                    Shots on Target:
+                    {{ selectedForm.performanceMetrics.shooting.shotsOnTarget }}
+                  </li>
+                  <li>
+                    Goals Scored:
+                    {{ selectedForm.performanceMetrics.shooting.goalsScored }}
+                  </li>
+                  <li>
+                    Shot Accuracy:
+                    {{ selectedForm.performanceMetrics.shooting.shotAccuracy }}%
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <!-- Defending -->
+              <div class="col-md-6">
+                <h4>Defending</h4>
+                <ul>
+                  <li>
+                    Tackles:
+                    {{ selectedForm.performanceMetrics.defending.tackles }}
+                  </li>
+                  <li>
+                    Interceptions:
+                    {{
+                      selectedForm.performanceMetrics.defending.interceptions
+                    }}
+                  </li>
+                  <li>
+                    Clearances:
+                    {{ selectedForm.performanceMetrics.defending.clearances }}
+                  </li>
+                  <li>
+                    Blocks:
+                    {{ selectedForm.performanceMetrics.defending.blocks }}
+                  </li>
+                </ul>
+              </div>
+              <!-- Physical -->
+              <div class="col-md-6">
+                <h4>Physical</h4>
+                <ul>
+                  <li>
+                    Distance Covered:
+                    {{
+                      selectedForm.performanceMetrics.physical.distanceCovered
+                    }}
+                    meters
+                  </li>
+                  <li>
+                    Sprints:
+                    {{ selectedForm.performanceMetrics.physical.sprints }}
+                  </li>
+                  <li>
+                    Duels Won:
+                    {{ selectedForm.performanceMetrics.physical.duelsWon }}
+                  </li>
+                  <li>
+                    Aerial Duels Won:
+                    {{
+                      selectedForm.performanceMetrics.physical.aerialDuelsWon
+                    }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <!-- Creativity -->
+              <div class="col-md-6">
+                <h4>Creativity</h4>
+                <ul>
+                  <li>
+                    Assists:
+                    {{ selectedForm.performanceMetrics.creativity.assists }}
+                  </li>
+                  <li>
+                    Crosses Completed:
+                    {{
+                      selectedForm.performanceMetrics.creativity
+                        .crossesCompleted
+                    }}
+                  </li>
+                  <li>
+                    Through Balls Completed:
+                    {{
+                      selectedForm.performanceMetrics.creativity
+                        .throughBallsCompleted
+                    }}
+                  </li>
+                  <li>
+                    Dribbles Completed:
+                    {{
+                      selectedForm.performanceMetrics.creativity
+                        .dribblesCompleted
+                    }}
+                  </li>
+                </ul>
+              </div>
+              <!-- Discipline -->
+              <div class="col-md-6">
+                <h4>Discipline</h4>
+                <ul>
+                  <li>
+                    Yellow Cards:
+                    {{ selectedForm.performanceMetrics.discipline.yellowCards }}
+                  </li>
+                  <li>
+                    Red Cards:
+                    {{ selectedForm.performanceMetrics.discipline.redCards }}
+                  </li>
+                  <li>
+                    Fouls Committed:
+                    {{
+                      selectedForm.performanceMetrics.discipline.foulsCommitted
+                    }}
+                  </li>
+                  <li>
+                    Fouls Suffered:
+                    {{
+                      selectedForm.performanceMetrics.discipline.foulsSuffered
+                    }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overall Assessment -->
+        <div class="card mb-3">
+          <div class="card-header bg-secondary text-white">
+            Overall Assessment
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>
+                Rating:
+                {{ selectedForm.performanceMetrics.overallAssessment.rating }}
+              </li>
+              <li>
+                Comments:
+                {{ selectedForm.performanceMetrics.overallAssessment.comments }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Additional Observations -->
+        <div class="card mb-3">
+          <div class="card-header bg-success text-white">
+            Additional Observations
+          </div>
+          <div class="card-body">
+            <p>{{ selectedForm.additionalObservations }}</p>
+          </div>
+        </div>
+
+        <div class="text-right">
+          <!-- Aligner à droite -->
+          <button class="btn btn-warning" (click)="hideForm()">
+            Hide Form
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="showAddForm">
+      <h2>Add Form</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Player Information -->
+
+        <div formGroupName="playerInformation" class="row">
+          <div class="col-md-4 mb-3">
+            <label for="playerName">Player Name:</label>
+            <input
+              type="text"
+              id="playerName"
+              class="form-control"
+              formControlName="playerName"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="team">Team:</label>
+            <input
+              type="text"
+              id="team"
+              class="form-control"
+              formControlName="team"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="position">Position:</label>
+            <input
+              type="text"
+              id="position"
+              class="form-control"
+              formControlName="position"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div formGroupName="performanceMetrics">
+          <!-- Passing -->
+          <div formGroupName="passing" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="totalPasses">Total Passes:</label>
+              <input
+                type="number"
+                id="totalPasses"
+                class="form-control"
+                formControlName="totalPasses"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="successfulPasses">Successful Passes:</label>
+              <input
+                type="number"
+                id="successfulPasses"
+                class="form-control"
+                formControlName="successfulPasses"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="passingAccuracy">Passing Accuracy:</label>
+              <input
+                type="number"
+                id="passingAccuracy"
+                class="form-control"
+                formControlName="passingAccuracy"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="keyPasses">Key Passes:</label>
+              <input
+                type="number"
+                id="keyPasses"
+                class="form-control"
+                formControlName="keyPasses"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="shooting" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="totalShots">totalShots:</label>
+              <input
+                type="number"
+                id="totalShots"
+                class="form-control"
+                formControlName="totalShots"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="shotsOnTarget">shotsOnTarget:</label>
+              <input
+                type="number"
+                id="shotsOnTarget"
+                class="form-control"
+                formControlName="shotsOnTarget"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="goalsScored">goalsScored:</label>
+              <input
+                type="number"
+                id="goalsScored"
+                class="form-control"
+                formControlName="goalsScored"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="shotAccuracy">shotAccuracy:</label>
+              <input
+                type="number"
+                id="shotAccuracy"
+                class="form-control"
+                formControlName="shotAccuracy"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="defending" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="tackles">tackles:</label>
+              <input
+                type="number"
+                id="tackles"
+                class="form-control"
+                formControlName="tackles"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="interceptions">interceptions:</label>
+              <input
+                type="number"
+                id="interceptions"
+                class="form-control"
+                formControlName="interceptions"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="clearances">clearances:</label>
+              <input
+                type="number"
+                id="clearances"
+                class="form-control"
+                formControlName="clearances"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="blocks">blocks:</label>
+              <input
+                type="number"
+                id="blocks"
+                class="form-control"
+                formControlName="blocks"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="physical" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="distanceCovered">distanceCovered:</label>
+              <input
+                type="number"
+                id="distanceCovered"
+                class="form-control"
+                formControlName="distanceCovered"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="sprints">sprints:</label>
+              <input
+                type="number"
+                id="sprints"
+                class="form-control"
+                formControlName="sprints"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="duelsWon">duelsWon:</label>
+              <input
+                type="number"
+                id="duelsWon"
+                class="form-control"
+                formControlName="duelsWon"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="aerialDuelsWon">aerialDuelsWon:</label>
+              <input
+                type="number"
+                id="aerialDuelsWon"
+                class="form-control"
+                formControlName="aerialDuelsWon"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="creativity" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="assists">assists:</label>
+              <input
+                type="number"
+                id="assists"
+                class="form-control"
+                formControlName="assists"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="crossesCompleted">crossesCompleted:</label>
+              <input
+                type="number"
+                id="crossesCompleted"
+                class="form-control"
+                formControlName="crossesCompleted"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="throughBallsCompleted">throughBallsCompleted:</label>
+              <input
+                type="number"
+                id="throughBallsCompleted"
+                class="form-control"
+                formControlName="throughBallsCompleted"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="dribblesCompleted">dribblesCompleted:</label>
+              <input
+                type="number"
+                id="dribblesCompleted"
+                class="form-control"
+                formControlName="dribblesCompleted"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="discipline" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="assists">yellowCards:</label>
+              <input
+                type="number"
+                id="yellowCards"
+                class="form-control"
+                formControlName="yellowCards"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="redCards">redCards:</label>
+              <input
+                type="number"
+                id="redCards"
+                class="form-control"
+                formControlName="redCards"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="foulsCommitted">foulsCommitted:</label>
+              <input
+                type="number"
+                id="foulsCommitted"
+                class="form-control"
+                formControlName="foulsCommitted"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="foulsSuffered">foulsSuffered:</label>
+              <input
+                type="number"
+                id="foulsSuffered"
+                class="form-control"
+                formControlName="foulsSuffered"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="overallAssessment" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="rating">rating:</label>
+              <input
+                type="number"
+                id="rating"
+                class="form-control"
+                formControlName="rating"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="comments">comments:</label>
+              <textarea
+                id="comments"
+                class="form-control"
+                formControlName="comments"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Autres sections de performance metrics -->
+        </div>
+
+        <!-- Additional Observations -->
+        <div class="form-group">
+          <label for="additionalObservations">Additional Observations:</label>
+          <textarea
+            id="additionalObservations"
+            class="form-control"
+            formControlName="additionalObservations"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="listform" *ngIf="showFormsList">
+    <h4>List of Forms</h4>
+
+    <div class="table-responsive mt-3">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-green">
+          <tr>
+            <th>Player Name</th>
+            <th>Team</th>
+            <th>Position</th>
+
+            <th>Total Passes</th>
+            <th>Successful Passes</th>
+            <th>Passing Accuracy</th>
+            <th>Key Passes</th>
+            <th>Total Shots</th>
+            <th>Shots On Target</th>
+            <th>Goals Scored</th>
+            <th>Shot Accuracy</th>
+            <th>Tackles</th>
+            <th>Interceptions</th>
+            <th>Clearances</th>
+            <th>Blocks</th>
+            <th>Distance Covered</th>
+            <th>Sprints</th>
+            <th>Duels Won</th>
+            <th>Aerial Duels Won</th>
+            <th>Assists</th>
+            <th>Crosses Completed</th>
+            <th>Through Balls Completed</th>
+            <th>Dribbles Completed</th>
+            <th>Yellow Cards</th>
+            <th>Red Cards</th>
+            <th>Fouls Committed</th>
+            <th>Fouls Suffered</th>
+            <th>Rating</th>
+            <th>Comments</th>
+            <th>Additional Observations</th>
+            <th>Actions</th>
+            <th>Actions</th>
+            <th>Actions</th>
+            <!-- Ajout de la colonne pour les actions -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let form of forms">
+            <td>{{ form.playerInformation.playerName }}</td>
+            <td>{{ form.playerInformation.team }}</td>
+            <td>{{ form.playerInformation.position }}</td>
+
+            <td>{{ form.performanceMetrics.passing.totalPasses }}</td>
+            <td>{{ form.performanceMetrics.passing.successfulPasses }}</td>
+            <td>{{ form.performanceMetrics.passing.passingAccuracy }}</td>
+            <td>{{ form.performanceMetrics.passing.keyPasses }}</td>
+            <td>{{ form.performanceMetrics.shooting.totalShots }}</td>
+            <td>{{ form.performanceMetrics.shooting.shotsOnTarget }}</td>
+            <td>{{ form.performanceMetrics.shooting.goalsScored }}</td>
+            <td>{{ form.performanceMetrics.shooting.shotAccuracy }}</td>
+            <td>{{ form.performanceMetrics.defending.tackles }}</td>
+            <td>{{ form.performanceMetrics.defending.interceptions }}</td>
+            <td>{{ form.performanceMetrics.defending.clearances }}</td>
+            <td>{{ form.performanceMetrics.defending.blocks }}</td>
+            <td>{{ form.performanceMetrics.physical.distanceCovered }}</td>
+            <td>{{ form.performanceMetrics.physical.sprints }}</td>
+            <td>{{ form.performanceMetrics.physical.duelsWon }}</td>
+            <td>{{ form.performanceMetrics.physical.aerialDuelsWon }}</td>
+            <td>{{ form.performanceMetrics.creativity.assists }}</td>
+            <td>{{ form.performanceMetrics.creativity.crossesCompleted }}</td>
+            <td>
+              {{ form.performanceMetrics.creativity.throughBallsCompleted }}
+            </td>
+            <td>{{ form.performanceMetrics.creativity.dribblesCompleted }}</td>
+            <td>{{ form.performanceMetrics.discipline.yellowCards }}</td>
+            <td>{{ form.performanceMetrics.discipline.redCards }}</td>
+            <td>{{ form.performanceMetrics.discipline.foulsCommitted }}</td>
+            <td>{{ form.performanceMetrics.discipline.foulsSuffered }}</td>
+            <td>{{ form.performanceMetrics.overallAssessment.rating }}</td>
+            <td>{{ form.performanceMetrics.overallAssessment.comments }}</td>
+            <td>{{ form.additionalObservations }}</td>
+            <td>
+              <button class="btn btn-info btn-sm" (click)="updateForm(form)">
+                Update Form
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="deleteForms(form)">
+                Delete Form
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="showPlayerStats(form._id)"
+              >
+                Show Stats
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h4 class="mt-4">Defending Stats</h4>
+      <canvas id="playerStatsChart" width="400" height="400"></canvas>
+    </div>
+    <div>
+      <h4 class="mt-4">Discipline Stats</h4>
+      <canvas id="playerStatsChartDiscipline" width="400" height="400"></canvas>
+    </div>
+
+    <div class="container" *ngIf="selectedForm">
+      <h2>Update Form</h2>
+      <form [formGroup]="formUpdate" (ngSubmit)="submitUpdateForm()">
+        <!-- Player Information -->
+
+        <div formGroupName="playerInformation" class="row">
+          <div class="col-md-4 mb-3">
+            <label for="playerName">Player Name:</label>
+            <input
+              type="text"
+              id="playerName"
+              class="form-control"
+              formControlName="playerName"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="team">Team:</label>
+            <input
+              type="text"
+              id="team"
+              class="form-control"
+              formControlName="team"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="position">Position:</label>
+            <input
+              type="text"
+              id="position"
+              class="form-control"
+              formControlName="position"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div formGroupName="performanceMetrics">
+          <!-- Passing -->
+          <div formGroupName="passing" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="totalPasses">Total Passes:</label>
+              <input
+                type="number"
+                id="totalPasses"
+                class="form-control"
+                formControlName="totalPasses"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="successfulPasses">Successful Passes:</label>
+              <input
+                type="number"
+                id="successfulPasses"
+                class="form-control"
+                formControlName="successfulPasses"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="passingAccuracy">Passing Accuracy:</label>
+              <input
+                type="number"
+                id="passingAccuracy"
+                class="form-control"
+                formControlName="passingAccuracy"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="keyPasses">Key Passes:</label>
+              <input
+                type="number"
+                id="keyPasses"
+                class="form-control"
+                formControlName="keyPasses"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="shooting" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="totalShots">totalShots:</label>
+              <input
+                type="number"
+                id="totalShots"
+                class="form-control"
+                formControlName="totalShots"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="shotsOnTarget">shotsOnTarget:</label>
+              <input
+                type="number"
+                id="shotsOnTarget"
+                class="form-control"
+                formControlName="shotsOnTarget"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="goalsScored">goalsScored:</label>
+              <input
+                type="number"
+                id="goalsScored"
+                class="form-control"
+                formControlName="goalsScored"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="shotAccuracy">shotAccuracy:</label>
+              <input
+                type="number"
+                id="shotAccuracy"
+                class="form-control"
+                formControlName="shotAccuracy"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="defending" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="tackles">tackles:</label>
+              <input
+                type="number"
+                id="tackles"
+                class="form-control"
+                formControlName="tackles"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="interceptions">interceptions:</label>
+              <input
+                type="number"
+                id="interceptions"
+                class="form-control"
+                formControlName="interceptions"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="clearances">clearances:</label>
+              <input
+                type="number"
+                id="clearances"
+                class="form-control"
+                formControlName="clearances"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="blocks">blocks:</label>
+              <input
+                type="number"
+                id="blocks"
+                class="form-control"
+                formControlName="blocks"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="physical" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="distanceCovered">distanceCovered:</label>
+              <input
+                type="number"
+                id="distanceCovered"
+                class="form-control"
+                formControlName="distanceCovered"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="sprints">sprints:</label>
+              <input
+                type="number"
+                id="sprints"
+                class="form-control"
+                formControlName="sprints"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="duelsWon">duelsWon:</label>
+              <input
+                type="number"
+                id="duelsWon"
+                class="form-control"
+                formControlName="duelsWon"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="aerialDuelsWon">aerialDuelsWon:</label>
+              <input
+                type="number"
+                id="aerialDuelsWon"
+                class="form-control"
+                formControlName="aerialDuelsWon"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="creativity" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="assists">assists:</label>
+              <input
+                type="number"
+                id="assists"
+                class="form-control"
+                formControlName="assists"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="crossesCompleted">crossesCompleted:</label>
+              <input
+                type="number"
+                id="crossesCompleted"
+                class="form-control"
+                formControlName="crossesCompleted"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="throughBallsCompleted">throughBallsCompleted:</label>
+              <input
+                type="number"
+                id="throughBallsCompleted"
+                class="form-control"
+                formControlName="throughBallsCompleted"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="dribblesCompleted">dribblesCompleted:</label>
+              <input
+                type="number"
+                id="dribblesCompleted"
+                class="form-control"
+                formControlName="dribblesCompleted"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="discipline" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="assists">yellowCards:</label>
+              <input
+                type="number"
+                id="yellowCards"
+                class="form-control"
+                formControlName="yellowCards"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="redCards">redCards:</label>
+              <input
+                type="number"
+                id="redCards"
+                class="form-control"
+                formControlName="redCards"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="foulsCommitted">foulsCommitted:</label>
+              <input
+                type="number"
+                id="foulsCommitted"
+                class="form-control"
+                formControlName="foulsCommitted"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="foulsSuffered">foulsSuffered:</label>
+              <input
+                type="number"
+                id="foulsSuffered"
+                class="form-control"
+                formControlName="foulsSuffered"
+                required
+              />
+            </div>
+          </div>
+          <div formGroupName="overallAssessment" class="row">
+            <div class="col-md-3 mb-3">
+              <label for="rating">rating:</label>
+              <input
+                type="number"
+                id="rating"
+                class="form-control"
+                formControlName="rating"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="comments">comments:</label>
+              <textarea
+                id="comments"
+                class="form-control"
+                formControlName="comments"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Autres sections de performance metrics -->
+        </div>
+
+        <!-- Additional Observations -->
+        <div class="form-group">
+          <label for="additionalObservations">Additional Observations:</label>
+          <textarea
+            id="additionalObservations"
+            class="form-control"
+            formControlName="additionalObservations"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="container mt-4" *ngIf="showPerformance">
+    <!-- <h4 class="mb-4">Match Analysis</h4> -->
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Passes Video</h2>
+        <button class="btn btn-primary mb-2" (click)="viewPassesVideo()">
+          View Passes Video
+        </button>
+        <video *ngIf="videoUrl" class="w-100" controls>
+          <source [src]="videoUrl" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Passes Chart</h2>
+        <button class="btn btn-primary mb-2" (click)="viewPassesChart()">
+          View Passes Chart
+        </button>
+        <img
+          *ngIf="passesChart"
+          class="w-100"
+          [src]="passesChart"
+          alt="Passes Chart"
+        />
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Number of Passes Data</h2>
+        <button class="btn btn-primary mb-2" (click)="viewPlayerPosition()">
+          View Passes Number
+        </button>
+        <div *ngIf="passesData" class="mt-2">
+          <pre>{{ passesData | json }}</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Players Position Data</h2>
+        <button class="btn btn-primary mb-2" (click)="getData()">
+          View Player Position
+        </button>
+        <div *ngIf="passesData1" class="mt-2">
+          <h2>Passes Data</h2>
+          <ul class="list-group">
+            <li *ngFor="let item of passesData1" class="list-group-item">
+              {{ item.team }}: {{ item.start_frame }} to {{ item.end_frame }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

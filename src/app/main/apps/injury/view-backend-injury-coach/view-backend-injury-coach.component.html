@@ -1,0 +1,99 @@
+
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+  
+
+  
+      <!-- Contextual classes -->
+      <div class="row" id="table-contextual">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header"><h4 class="card-title">List Of Injuries : </h4></div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <a routerLink="/apps/injury/injuryArchives" class="btn btn-outline-secondary float-right mr-1" rippleEffect
+                  >Archives</a
+                >
+                </div>
+
+                <div class="col-md-6 col-12">
+                  <div class="d-flex justify-content-between align-items-center m-1">
+                    <label class="d-flex align-items-center"
+                      >Search<input
+                        type="search"
+                        placeholder="Search"
+                        class="form-control ml-25"
+                        [(ngModel)]="searchTerm" (input)="search()"
+                    /></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name Of Player</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Recovery Status</th>
+                    <th>Duration</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let injury of displayedInjuries"  class="table-default">
+                    <td>
+                      <img  [src]="getPlayerImage(injury?.player_id)" class="mr-75 rounded-circle" height="20" width="20" alt="Figma" />
+                            <span class="font-weight-bold">{{ getPlayerName(injury?.player_id) }}</span>
+
+                      
+                    </td>
+                    <td>{{ injury?.date }}</td>
+                    <td>
+                        {{ injury?.type }}
+                    </td>
+                    <td>{{ injury?.description }}</td>
+                    <td>
+                      <span class="badge badge-pill badge-light mr-1" [style.color]="'orange'" *ngIf="injury.recovery_status === 'In Progress'"> {{ injury.recovery_status }} </span>
+                      <span class="badge badge-pill badge-light mr-1" [style.color]="'red'" *ngIf="injury.recovery_status === 'In Rehabilitation'"> {{ injury.recovery_status }} </span>
+                      <span  class="badge badge-pill badge-light mr-1" [style.color]="'green'" *ngIf="injury.recovery_status === 'Recovered'"> {{ injury.recovery_status }} </span>
+                  </td>
+
+                  
+                    <td>{{ injury?.duration }} </td>
+                    
+                    
+                    
+                    
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <ngb-pagination
+              [collectionSize]="injuries.length"
+              [(page)]="currentPage"
+              [pageSize]="itemsPerPage"
+              aria-label="Custom pagination"
+              (pageChange)="applyPagination()"
+            >
+              <ng-template ngbPaginationPrevious>
+                <span>&laquo; Previous</span>
+              </ng-template>
+              <ng-template ngbPaginationNext>
+                <span>Next &raquo;</span>
+              </ng-template>
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+      <!--/ Contextual classes -->
+  
+     
+    </div>
+  </div>
+  

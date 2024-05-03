@@ -1,0 +1,71 @@
+{
+  "posts": [
+    {
+      "id": 6,
+      "fullname": "houssem eddin aouinti",
+      "username": "ediine123",
+      "email": "houssem-960@hotmaim.com",
+      "phone": 50303910,
+      "salary": "5",
+      "role": "editor"
+    },
+    {
+      "id": 7,
+      "fullname": "houssem  eddine aouinti",
+      "username": "houssem 0°02",
+      "email": "houssem095@gmail.com",
+      "phone": 50303910,
+      "salary": "",
+      "role": "maintainer"
+    },
+    {
+      "id": 8,
+      "fullname": "dd",
+      "username": "dd",
+      "email": "dd",
+      "phone": 50303910,
+      "salary": "",
+      "role": "Author"
+    },
+    {
+      "id": 9,
+      "fullname": "aouinti",
+      "username": "houssem1996",
+      "email": "houssem095@gmail.com",
+      "phone": 7464687,
+      "salary": "",
+      "role": "Maintainer"
+    },
+    {
+      "id": 10,
+      "fullname": "55",
+      "username": "55",
+      "email": "55",
+      "phone": 55,
+      "salary": "",
+      "role": "Author"
+    },
+    {
+      "id": 11,
+      "fullname": "dhia",
+      "username": "akodaz",
+      "email": "okazefazpko",
+      "phone": null,
+      "salary": "",
+      "role": "Maintainer"
+    },
+    {
+      "id": 12,
+      "fullname": "",
+      "username": "",
+      "email": "",
+      "phone": "",
+      "salary": "",
+      "role": ""
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
